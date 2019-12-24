@@ -1,3 +1,95 @@
+//A*算法 八数码问题  #include #include #define base 99999999 using namespace std;  
+struct X
+{
+	int now, x, s;
+	//分别存储当前状态，康托展开式编号，0的位置  }p[37000]; struct X tmp,d; 
+	//总状态数为9!=362880 
+	int h[370000] = { 0 }, g[370000] = { 0 };
+	//判重+记录到某种状态的H(N),G(N)   
+	int all = 0, now[9] = { 0 }, end[9] = { 0 };
+	//分别记录待扩展节点数，当前状态，目标状态 bool in_[370000]={0};//表示某个结点是否在堆内 int cantor(int s[])//用康托展开式压缩  { 
+	int num = 0, i = 0, j = 0, b = 0;
+	int cantor(int s[])//用康托展开式压缩  
+	{
+		int num = 0, i = 0, j = 0, b = 0;
+		for (i = 8; i >= 1; --i)
+		{
+			b = s[i];
+			for (j = 8; j > i; --j)
+				if (s[j] = 0)
+					s[i] = num % 10, num /= 10;
+			return;
+		}
+	}
+	int h_(int s[]) //启发函数H（N） 
+	{
+		int i = 0, num = 0;
+		for (i = 0; i < 9; ++i)
+			if (s[i] != end[i])
+				++num;
+		return num;
+	}
+	void init() {
+		int i = 0;     char a = 0;
+		memset(g, -1, sizeof(g));     memset(h, -1, sizeof(h));     for (i = 0; i < 9; ++i)     {
+			cin >> now[i];         if (now[i] == 0)             p[1].s = i;
+		}
+		for (i = 0; i < 9; ++i)         cin >> end[i];
+		p[1].x = cantor(&now[0]);     p[1].now = cps(&now[0]);
+		g[p[1].x] = 0; h[p[1].x] = h_(&now[0]);     in_[p[1].x] = 1;     all = 1;
+	}
+
+	void mtd(int x) //维护堆  
+	{
+		int d = x;
+		if (x * 2 <= all && g[p[x * 2].x] + h[p[x * 2].x]1 && g[p[x].x] + h[p[x].x]g[d.x] + 1)     {
+			g[num] = g[d.x] + 1;         if (in_[num] == 0)         {
+				++all; if (h[num] == -1)h[num] = h_(&now[0]);
+				p[all].x = num, p[all].now = cps(&now[0]), p[all].s = step;             mtu(all); in_[num] = 1;
+			}
+		}
+		return;
+	}
+
+	void A_()
+	{
+		int temp = 0;     while (all >= 1)     {
+			if (h[p[1].x] == 0)
+			{
+				cout < 2)         {
+				temp = now[d.s], now[d.s] = now[d.s - 3], now[d.s - 3] = temp;
+				Try(d.s - 3);
+				temp = now[d.s], now[d.s] = now[d.s - 3], now[d.s - 3] = temp;         }
+				if (d.s % 3 != 0)         {
+					temp = now[d.s], now[d.s] = now[d.s - 1], now[d.s - 1] = temp;             Try(d.s - 1);
+					temp = now[d.s], now[d.s] = now[d.s - 1], now[d.s - 1] = temp;
+				}
+				if ((d.s + 1) % 3 != 0)         {
+					temp = now[d.s], now[d.s] = now[d.s + 1], now[d.s + 1] = temp;             Try(d.s + 1);
+					temp = now[d.s], now[d.s] = now[d.s + 1], now[d.s + 1] = temp;
+				}
+				if (d.s < 6)         {
+					temp = now[d.s], now[d.s] = now[d.s + 3], now[d.s + 3] = temp;             Try(d.s + 3);
+					temp = now[d.s], now[d.s] = now[d.s + 3], now[d.s + 3] = temp;
+				}
+			}
+			cout << "-1\n";
+			return;
+		}
+	}
+};
+
+int main()
+{
+	freopen("input.in", "r", stdin);
+	freopen("output.out", "w", stdout);
+	init();
+	A_();
+	return 0;
+}
+
+
+
 #include "stdafx.h"
 #include "MyString.h"
 #include<string.h>
